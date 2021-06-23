@@ -1,4 +1,4 @@
-=== Instagram Media Library ===
+=== IG Media Library ===
 Contributors: mottodesignstudio
 Tags: instagram, media library, feed
 Donate link: https://motto.ca
@@ -22,4 +22,6 @@ That\'s why this plugin doesn\'t embed external images. Instead it\'ll sync your
 - Use the included shortcode to output your most recent images `[igml posts_per_page=\"5\"]`
 
 == Changelog ==
-- 1.0.0, First version
+
+= 1.0 =
+* First version. 
