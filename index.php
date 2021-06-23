@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:       IG Media Library
+ * Plugin Name:       Social Media Library
  * Plugin URI:        https://github.com/wpmotto/wp-instagram-media-library
  * Description:       Save images from a public Instagram account to your WordPress library.
  * Version:           1.0.0
@@ -36,7 +36,7 @@ if( $settings->username && !$settings->sync_off ) {
 }
 
 
-add_shortcode( 'igml', function( $args ) {
+add_shortcode( 'social_feed', function( $args ) {
     $media = new MediaUploads( $args );
     foreach( $media->get() as $post ):
     ?>

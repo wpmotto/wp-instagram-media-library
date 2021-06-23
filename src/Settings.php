@@ -23,7 +23,7 @@ class Settings {
     
         add_settings_section(
             'igml_media_section', 
-            __( 'Instagram Media Library', 'motto-igml' ), 
+            __( 'Social Media Library', 'motto-igml' ), 
             function() { 
                 // echo __( 'Instagram Media Library', 'motto-igml' );
             }, 

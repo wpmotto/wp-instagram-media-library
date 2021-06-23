@@ -1,6 +1,6 @@
 === IG Media Library ===
 Contributors: mottodesignstudio
-Tags: instagram, media library, feed
+Tags: instagram, media library, feed, social
 Donate link: https://motto.ca
 Requires at least: 4.8
 Tested up to: 5.7
@@ -18,7 +18,7 @@ That\'s why this plugin doesn\'t embed external images. Instead it\'ll sync your
 
 == Installation ==
 - Install and activate the plugin
-- In Settings > Media > Instagram, enter and save the account username you want to download from
+- In Settings > Media > Social Media Library, enter and save the account username you want to download from
 - Use the included shortcode to output your most recent images `[igml posts_per_page=\"5\"]`
 
 == Changelog ==
