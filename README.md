@@ -8,15 +8,19 @@ There are many Instagram feed plugins for WordPress available. Unfortunately, In
 
 That's why this plugin doesn't embed external images. Instead it'll sync your media library with Instagram by downloading them when available. If the API eventually breaks, the only side-effect is an out-of-date but still working instagram feed; as opposed to other plugins which will produce broken feeds while the authors work to update code to work with the breaking API changes. 
 
+## RapidAPI
+
+At the moment, we require a RapidAPI key. This allows us implement a proxy to avoid getting the IP banned from Instagram.
+
 ## Developers
 
 ```
-$medias = new Motto\InstagramMediaLibrary\MediaUploads( $query_args );
-foreach( $medias as $media ) {
-    echo $media->html()
+$medias = new Motto\InstagramMediaLibrary\MediaUploads( $query_args = [] );
+foreach( $medias as $image ) {
+    echo $image->src()
 }
 ```
 
 ## Shortcodes
-- `[igml posts_per_page="3"]`
+- `[social_feed posts_per_page="3"]`
     - Attributes map directly to `WP_Query` arguments.

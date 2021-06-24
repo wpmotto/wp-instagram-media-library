@@ -17,4 +17,9 @@ class Image {
     {
         return wp_get_attachment_image($this->post->ID, $size);
     }
+
+    public function src( $size = 'full' )
+    {
+        return wp_get_attachment_image_src($this->post->ID, $size);
+    }
 }
