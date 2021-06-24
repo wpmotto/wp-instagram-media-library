@@ -24,8 +24,8 @@ use Motto\InstagramMediaLibrary\Settings;
 $settings = new Settings;
 add_action( 'admin_init', [$settings, 'media']);
 
-if( $settings->username && !$settings->sync_off ) {
-    $remote = new RemoteUserMedia( $settings->username );
+if( $settings->canSyncInstagram() ) {
+    $remote = new RemoteUserMedia( $settings );
 
     add_action( 
         'igml_cron_hook', [$remote, 'uploadUnsavedMedia'] 
@@ -35,21 +35,20 @@ if( $settings->username && !$settings->sync_off ) {
         wp_schedule_event( time(), $settings->frequency ?? 'daily', 'igml_cron_hook' );
 }
 
+// Add Shortcode
+add_shortcode( 'social_feed', function( $atts ) {
+    $media = new MediaUploads( $atts );
+    $images = implode('', array_map( function( $item ) {
+        return "<li>{$item->html()}</li>";
+    }, $media->get() ));
 
-add_shortcode( 'social_feed', function( $args ) {
-    $media = new MediaUploads( $args );
-    foreach( $media->get() as $post ):
-    ?>
-    <img src="<?php echo $post->guid ?>" alt="<?php echo $post->post_title ?>" />
-    <?php
-    endforeach;
+    return sprintf('<ul class="%s">%s</ul>', 'igml-list', $images);
 });
 
 add_filter( 'posts_where', function( $where, $query ) {
     global $wpdb;
 
     $ends_with = esc_sql( $query->get( 'guid_ends_with' ) );
-
     if ( $ends_with )
         $where .= " AND $wpdb->posts.guid LIKE '%$ends_with'";
 

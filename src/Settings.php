@@ -42,6 +42,21 @@ class Settings {
             'media', 
             'igml_media_section' 
         );
+
+        add_settings_field( 
+            'igml_radidapi_key', 
+            __( 'RapidAPI Key', 'motto-igml' ), 
+            function() { 
+                $options = get_option( 'igml_settings' );
+                ?>
+                <input type='text' name='igml_settings[rapidapi_key]' value='<?php echo $options['rapidapi_key'] ?? null; ?>'>
+                <p><?php echo sprintf(__('Enter your <a href="%s" target="_blank">RapidAPI Key</a> in order use a proxy to avoid your IP from being blocked.', 'motto-igml'), 'https://rapidapi.com/restyler/api/instagram40') ?></p>
+
+                <?php
+            }, 
+            'media', 
+            'igml_media_section' 
+        );
     
         add_settings_field( 
             'igml_sync_off', 
@@ -81,5 +96,10 @@ class Settings {
             'media', 
             'igml_media_section' 
         );        
-    }    
+    }
+    
+    public function canSyncInstagram()
+    {
+        return !is_null($this->username) && !$this->sync_off && !is_null($this->rapidapi_key);
+    }
 }

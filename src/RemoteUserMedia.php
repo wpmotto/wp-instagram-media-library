@@ -4,23 +4,25 @@ namespace Motto\InstagramMediaLibrary;
 
 use InstagramScraper\Instagram;
 use InstagramScraper\Model\Media;
+use Motto\InstagramMediaLibrary\Settings;
+use InstagramScraper\Exception\InstagramException;
 
 class RemoteUserMedia {
     
-    private $username;
+    private $settings;
     private $scraper;
     private $allSaved = false;
 
-    public function __construct( $username )
+    public function __construct( Settings $settings )
     {
-        $this->username = $username;
+        $this->settings = $settings;
         $this->scraper = $this->initScraper();
     }
 
     private function initScraper()
     {
-        $scraper = new Instagram(new \GuzzleHttp\Client());
-        // $scraper->setRapidApiKey('03620e4c12msh7be23e68d3400a1p1a7c7fjsnb60253c9306d');
+        $scraper = new Instagram();
+        $scraper->setRapidApiKey($this->settings->rapidapi_key);
         return $scraper;
     }
 
@@ -35,9 +37,8 @@ class RemoteUserMedia {
                 'post_mime_type' => $wp_filetype['type'],
                 'post_parent' => $parent_post_id,
                 'post_title' => $media->getCaption(),
-                'post_date' => $media->getCreatedTime(),
+                'post_date' => date('Y-m-d H:i:s', $media->getCreatedTime()),
                 'post_name' => $media->getId(),
-                'post_type' => INSTAGRAM_PULL_POST_TYPE,
                 'post_content' => serialize($media),
                 'post_status' => 'inherit',
                 'guid' => $upload_file['url'],
@@ -66,18 +67,43 @@ class RemoteUserMedia {
         sleep(30);
     }
         
+    private function request( $username, $maxId = null )
+    {
+        try {
+            return $this->scraper->getPaginateMedias($username, $maxId);
+        } catch( InstagramException $e ) {
+            add_action('admin_notices', function() use ( $e ) {
+                ?>
+                <div class="notice notice-error is-dismissible"> 
+                    <p><strong>Social Media Library.</strong><br/>
+                        <?php echo $e->getMessage(); ?></p>
+                    <button type="button" class="notice-dismiss">
+                        <span class="screen-reader-text">Dismiss this notice.</span>
+                    </button>
+                </div>            
+                <?php
+            });
+
+            return false;
+        }
+    }
+
     public function uploadUnsavedMedia()
     {
-        $result = $this->scraper->getPaginateMedias($this->username);
+        $result = $this->request( $this->settings->username );
+        if( !$result ) return;
+
         $this->saveMedias( $result['medias'] );
 
-        while( $result['hasNextPage'] === true && $this->allSaved == false ) {
-            $this->rateLimitRequests();
-            $result = $this->scraper->getPaginateMedias(
-                $this->username, $result['maxId']
-            );
-            $this->saveMedias( $result['medias'] );
-        }    
+        // while( $result['hasNextPage'] === true && $this->allSaved == false ) {
+        //     $this->rateLimitRequests();
+        //     $result = $this->request(
+        //         $this->settings->username, $result['maxId']
+        //     );
+        //     if( !$result ) break;
+
+        //     $this->saveMedias( $result['medias'] );
+        // }    
     }
 
     public function saveMedias( $medias )

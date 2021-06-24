@@ -1,9 +1,5 @@
 {
     "name": "motto/instagram-media-library",
-    "require": {
-        "guzzlehttp/guzzle": "^7.3",
-        "raiym/instagram-php-scraper": "^0.11.1"
-    },
     "authors": [
         {
             "name": "Greg Hunt",
@@ -14,5 +10,8 @@
         "psr-4": {
             "Motto\\InstagramMediaLibrary\\": "src/"
         }
-    }    
+    },
+    "require": {
+        "restyler/instagram-php-scraper": "^1.0"
+    }
 }
