@@ -49,7 +49,7 @@ class Settings {
             function() { 
                 $options = get_option( 'igml_settings' );
                 ?>
-                <input type='text' name='igml_settings[rapidapi_key]' value='<?php echo $options['rapidapi_key'] ?? null; ?>'>
+                <input type="<?php echo esc_attr('text') ?>" name="<?php echo esc_attr('igml_settings[rapidapi_key]') ?>" value="<?php echo esc_attr($options['rapidapi_key']) ?? null; ?>">
                 <p><?php echo sprintf(__('Enter your <a href="%s" target="_blank">RapidAPI Key</a> in order use a proxy to avoid your IP from being blocked.', 'motto-igml'), 'https://rapidapi.com/restyler/api/instagram40') ?></p>
 
                 <?php
@@ -64,9 +64,8 @@ class Settings {
             function() { 
                 $options = get_option( 'igml_settings' );
                 ?>
-                <input type='checkbox' name='igml_settings[sync_off]' <?php checked( $options['sync_off'] ?? null, 1 ); ?> value='1'>
+                <input type="<?php echo esc_attr('checkbox') ?>" name="<?php echo esc_attr('igml_settings[sync_off]') ?>" <?php checked( $options['sync_off'] ?? null, 1 ); ?> value="<?php echo esc_attr('1') ?>">
                 <?php
-            
             }, 
             'media', 
             'igml_media_section' 
@@ -85,9 +84,11 @@ class Settings {
                     'weekly',
                 ];
                 ?>
-                <select name='igml_settings[frequency]'>
+                <select name="<?php echo esc_attr('igml_settings[frequency]') ?>">
                     <?php foreach($frequencies as $freq): ?>
-                    <option value='<?php echo $freq ?>' <?php selected( $options['frequency'] ?? 0, $freq ); ?>><?php echo ucfirst($freq) ?></option>
+                    <option value="<?php echo esc_attr($freq) ?>" <?php selected( $options['frequency'] ?? 0, $freq ); ?>>
+                        <?php echo esc_html(ucfirst($freq)) ?>
+                    </option>
                     <?php endforeach; ?>
                 </select>
             

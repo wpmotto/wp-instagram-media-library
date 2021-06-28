@@ -42,7 +42,7 @@ add_shortcode( 'social_feed', function( $atts ) {
         return "<li>{$item->html()}</li>";
     }, $media->get() ));
 
-    return sprintf('<ul class="%s">%s</ul>', 'igml-list', $images);
+    return sprintf('<ul class="%s">%s</ul>', esc_attr('igml-list'), $images);
 });
 
 add_filter( 'posts_where', function( $where, $query ) {

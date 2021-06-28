@@ -76,7 +76,7 @@ class RemoteUserMedia {
                 ?>
                 <div class="notice notice-error is-dismissible"> 
                     <p><strong>Social Media Library.</strong><br/>
-                        <?php echo $e->getMessage(); ?></p>
+                        <?php echo esc_html($e->getMessage()); ?></p>
                     <button type="button" class="notice-dismiss">
                         <span class="screen-reader-text">Dismiss this notice.</span>
                     </button>
@@ -95,15 +95,15 @@ class RemoteUserMedia {
 
         $this->saveMedias( $result['medias'] );
 
-        // while( $result['hasNextPage'] === true && $this->allSaved == false ) {
-        //     $this->rateLimitRequests();
-        //     $result = $this->request(
-        //         $this->settings->username, $result['maxId']
-        //     );
-        //     if( !$result ) break;
+        while( $result['hasNextPage'] === true && $this->allSaved == false ) {
+            $this->rateLimitRequests();
+            $result = $this->request(
+                $this->settings->username, $result['maxId']
+            );
+            if( !$result ) break;
 
-        //     $this->saveMedias( $result['medias'] );
-        // }    
+            $this->saveMedias( $result['medias'] );
+        }    
     }
 
     public function saveMedias( $medias )
