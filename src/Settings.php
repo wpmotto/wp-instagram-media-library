@@ -36,7 +36,7 @@ class Settings {
             function() { 
                 $options = get_option( 'igml_settings' );
                 ?>
-                <input type='text' name='igml_settings[username]' value='<?php echo $options['username'] ?? null; ?>'>
+                <input type="<?php echo esc_attr('text') ?>" name="<?php echo esc_attr('igml_settings[username]') ?>" value='<?php echo esc_attr($options['username']) ?? null; ?>'>
                 <?php
             }, 
             'media', 
