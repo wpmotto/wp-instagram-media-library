@@ -1,4 +1,4 @@
-=== IG Media Library ===
+=== Social Media Library ===
 Contributors: mottodesignstudio
 Tags: instagram, media library, feed, social
 Donate link: https://motto.ca
