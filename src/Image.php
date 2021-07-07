@@ -13,6 +13,16 @@ class Image {
         $this->post = $post;
     }
 
+    public function post()
+    {
+        return $this->post;
+    }
+
+    public function alt()
+    {
+        return $this->post->post_title;
+    }
+
     public function html( $size = 'full' )
     {
         return wp_get_attachment_image($this->post->ID, $size);

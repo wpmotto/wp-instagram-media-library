@@ -3,7 +3,7 @@
  * Plugin Name:       Social Media Library
  * Plugin URI:        https://github.com/wpmotto/wp-instagram-media-library
  * Description:       Save images from a public Instagram account to your WordPress library.
- * Version:           1.0.0
+ * Version:           1.0.1
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Motto
