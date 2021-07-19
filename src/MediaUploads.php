@@ -17,7 +17,13 @@ class MediaUploads {
             'order' => 'DESC',
             'posts_per_page' => 10,
             'post_status' => 'inherit',
-            'guid_ends_with' => '_ig_media.jpg'
+            'tax_query' => [
+                [
+                    'taxonomy' => 'social_media_attachments',
+                    'field'    => 'slug',
+                    'terms'    => 'instagram',
+                ],
+            ],            
         ], $args);
     }
 

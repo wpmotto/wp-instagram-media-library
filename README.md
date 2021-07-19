@@ -15,10 +15,12 @@ At the moment, we require a RapidAPI key. This allows us implement a proxy to av
 ## Developers
 
 ```
-$medias = new Motto\InstagramMediaLibrary\MediaUploads( $query_args = [] );
-foreach( $medias as $image ) {
-    echo $image->src()
-}
+$medias = new \Motto\InstagramMediaLibrary\MediaUploads( $query_args = [] );
+foreach( $medias->get() as $image ) {
+    echo '<a href="'. $image->social('link') .'">';
+    echo $image->html();
+    echo '</a>';
+} 
 ```
 
 ## Shortcodes

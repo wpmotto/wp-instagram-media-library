@@ -3,9 +3,9 @@ Contributors: mottodesignstudio
 Tags: instagram, media library, feed, social
 Donate link: https://motto.ca
 Requires at least: 4.8
-Tested up to: 5.7
+Tested up to: 5.8
 Requires PHP: 7.2
-Stable tag: 1.0.1
+Stable tag: 1.1.0
 License: GPLv2
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html
 
@@ -22,6 +22,10 @@ That\'s why this plugin doesn\'t embed external images. Instead it\'ll sync your
 - Use the included shortcode to output your most recent images `[igml posts_per_page=\"5\"]`
 
 == Changelog ==
+
+= 1.1 =
+* Moved social network meta from post content to attachment meta. 
+* Added filter in Media Library to view by network.
 
 = 1.0 =
 * First version. 
