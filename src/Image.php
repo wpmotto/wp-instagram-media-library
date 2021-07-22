@@ -20,6 +20,11 @@ class Image {
         return $this->post;
     }
 
+    public function attachment_url()
+    {
+        return get_permalink($this->post->ID);
+    }
+
     public function alt()
     {
         return $this->post->post_title;

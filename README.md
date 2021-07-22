@@ -26,3 +26,4 @@ foreach( $medias->get() as $image ) {
 ## Shortcodes
 - `[social_feed posts_per_page="3"]`
     - Attributes map directly to `WP_Query` arguments.
+    - Use `link="social"` or `link="attachment"` to link the image.

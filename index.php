@@ -3,7 +3,7 @@
  * Plugin Name:       Social Media Library
  * Plugin URI:        https://github.com/wpmotto/wp-instagram-media-library
  * Description:       Save images from a public Instagram account to your WordPress library.
- * Version:           1.1.0
+ * Version:           1.2
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Motto
@@ -15,7 +15,7 @@
  */
 require __DIR__ . '/vendor/autoload.php';
 
-define('MOTTO_IGML_VERSION', '1.0.0' );
+define('MOTTO_IGML_VERSION', '1.2.0' );
 
 use Motto\InstagramMediaLibrary\MediaUploads;
 use Motto\InstagramMediaLibrary\RemoteUserMedia;
@@ -45,9 +45,24 @@ if( $settings->canSyncInstagram() ) {
 
 // Add Shortcode
 add_shortcode( 'social_feed', function( $atts ) {
+
+    $link = false;
+    if( isset($atts['link']) ) {
+        $link = $atts['link'];
+        unset($atts['link']);
+    }
+
     $media = new MediaUploads( $atts );
-    $images = implode('', array_map( function( $item ) {
-        return "<li>{$item->html()}</li>";
+    $images = implode('', array_map( function( $item ) use ($link) {
+        $html = "<li>";
+        if( $link ) {
+            $href = ($link == "social") ? $item->social('link') : $item->attachment_url();
+            $html .= "<a href=\"$href\">";
+        }
+        $html .= $item->html();
+        if( $link ) $html .= "</a>";
+        $html .= "</li>";
+        return $html;
     }, $media->get() ));
 
     return sprintf('<ul class="%s">%s</ul>', esc_attr('igml-list'), $images);
