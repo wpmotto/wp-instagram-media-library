@@ -72,6 +72,18 @@ class Settings {
         );
 
         add_settings_field( 
+            'igml_run_now', 
+            __( 'Run Now', 'motto-igml' ), 
+            function() { 
+                ?>
+                <input type="<?php echo esc_attr('checkbox') ?>" name="<?php echo esc_attr('igml_settings[run_now]') ?>" value="<?php echo esc_attr('1') ?>">
+                <?php
+            }, 
+            'media', 
+            'igml_media_section' 
+        );
+
+        add_settings_field( 
             'igml_frequency', 
             __( 'Sync Frequency', 'motto-igml' ), 
             function() { 

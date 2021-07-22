@@ -37,9 +37,7 @@ if( $settings->canSyncInstagram() ) {
     /**
      * Initial Run when settings are updated.
      */
-    add_action(
-        'update_option_igml_settings', [$remote, 'uploadUnsavedMedia']
-    );
+    add_action( 'update_option_igml_settings', [$remote, 'uploadUnsavedMedia']);
 
     if ( !wp_next_scheduled( 'igml_cron_hook' ) )
         wp_schedule_event( time(), $settings->frequency ?? 'daily', 'igml_cron_hook' );
