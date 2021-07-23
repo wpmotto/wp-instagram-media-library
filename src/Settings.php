@@ -72,11 +72,44 @@ class Settings {
         );
 
         add_settings_field( 
+            'igml_thorough', 
+            __( 'Thorough Search', 'motto-igml' ), 
+            function() { 
+                $options = get_option( 'igml_settings' );
+                ?>
+                <input type="<?php echo esc_attr('checkbox') ?>" name="<?php echo esc_attr('igml_settings[thorough]') ?>" <?php checked( $options['thorough'] ?? null, 1 ); ?> value="<?php echo esc_attr('1') ?>">
+                <p><?php _e('By default, when left unchecked, the plugin will search only the most recent posts and stop when it reaches one that has already been saved. Check this box to always search everything.', 'motto-igml') ?></p>
+                <?php
+            }, 
+            'media', 
+            'igml_media_section' 
+        );
+
+        add_settings_field( 
             'igml_run_now', 
             __( 'Run Now', 'motto-igml' ), 
             function() { 
                 ?>
-                <input type="<?php echo esc_attr('checkbox') ?>" name="<?php echo esc_attr('igml_settings[run_now]') ?>" value="<?php echo esc_attr('1') ?>">
+                <div style="display:inline-block">
+                    <span class="spinner"></span>
+                    <button type="button" id="mottoIgmlRunNow" class="<?php echo esc_attr('button') ?>">
+                        <?php _e('Run Now', 'motto-igml') ?>
+                    </button>
+                </div>
+                <script type="text/javascript" >
+                jQuery(document).ready(function($) {
+                    $("#mottoIgmlRunNow").on('click', function() {
+                        var spinner = $(this).siblings('.spinner');
+                        spinner.addClass('is-active');
+                        jQuery.post(ajaxurl, {
+                            'action': 'igml_run',
+                        }, function(response) {
+                            spinner.removeClass('is-active');
+                            console.log(response);
+                        });
+                    });
+                });
+                </script>                
                 <?php
             }, 
             'media', 

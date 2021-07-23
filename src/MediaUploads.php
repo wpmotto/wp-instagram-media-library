@@ -8,9 +8,9 @@ class MediaUploads {
 
     private $args;
     
-    public function __construct( Array $args )
+    public function __construct( Array $args, $username = null )
     {
-        $this->args = array_merge([
+        $query = [
             'post_type'      => 'attachment',
             'post_mime_type' => 'image',
             'orderby' => 'date',
@@ -21,10 +21,13 @@ class MediaUploads {
                 [
                     'taxonomy' => 'social_media_attachments',
                     'field'    => 'slug',
-                    'terms'    => 'instagram',
+                    'terms'    => $username,
+                    'operator' => 'EXISTS',
                 ],
             ],            
-        ], $args);
+        ];
+
+        $this->args = array_merge($query, $args);
     }
 
     public function get()

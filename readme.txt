@@ -5,11 +5,11 @@ Donate link: https://motto.ca
 Requires at least: 4.8
 Tested up to: 5.8
 Requires PHP: 7.2
-Stable tag: 1.2
+Stable tag: 1.3
 License: GPLv2
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html
 
-Download images from public social media accounts to your WordPress image library. This is a great way to embed Instagram posts on your site without it breaking in the future. 
+Download images from public social media accounts to your WordPress image library. A great way to embed Instagram posts on your site. 
 
 == Description ==
 
@@ -20,12 +20,18 @@ That's why this plugin doesn't embed external images. Instead it'll sync your me
 == Installation ==
 - Install and activate the plugin
 - In Settings > Media > Social Media Library, enter and save the account username you want to download from
-- Use the included shortcode to output your most recent images `[igml posts_per_page="5"]`
+- Use the included shortcode to output your most recent images `[social_feed posts_per_page="5"]`
     - Attributes map directly to `WP_Query` arguments.
     - Use `link="social"` or `link="attachment"` to link the image.
+    - Use `username="instagramhandle"` if you've synced more than one account and want to grab only those posts.
 - Currently, requests from your server may occasionally get blocked and so it's best to use a proxy. [Signup here](https://rapidapi.com/restyler/api/instagram40) and enter your API key.
 
 == Changelog ==
+
+= 1.3 =
+* Run sync now via ajax.
+* Added option to search all posts.
+* Saved account name as categories in the media library.
 
 = 1.2 =
 * Added option to run sync immediately. 

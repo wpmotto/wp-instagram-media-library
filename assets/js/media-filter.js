@@ -19,7 +19,7 @@
 			});
 			filters.all = {
 				// Change this: use whatever default label you'd like
-				text:  'All Social Media',
+				text:  'Select Social Media Account',
 				props: {
 					// Change this: key needs to be the WP_Query var for the taxonomy
 					social_media_attachments: ''

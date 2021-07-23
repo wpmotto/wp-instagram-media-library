@@ -3,7 +3,7 @@
  * Plugin Name:       Social Media Library
  * Plugin URI:        https://github.com/wpmotto/wp-instagram-media-library
  * Description:       Save images from a public Instagram account to your WordPress library.
- * Version:           1.2
+ * Version:           1.3
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Motto
@@ -15,7 +15,7 @@
  */
 require __DIR__ . '/vendor/autoload.php';
 
-define('MOTTO_IGML_VERSION', '1.2.0' );
+define('MOTTO_IGML_VERSION', '1.3.0' );
 
 use Motto\InstagramMediaLibrary\MediaUploads;
 use Motto\InstagramMediaLibrary\RemoteUserMedia;
@@ -35,9 +35,18 @@ if( $settings->canSyncInstagram() ) {
     );
 
     /**
-     * Initial Run when settings are updated.
+     * Ajax Run
      */
-    add_action( 'update_option_igml_settings', [$remote, 'uploadUnsavedMedia']);
+    add_action( 'wp_ajax_igml_run', function() use ($remote) {
+        try {
+            $remote->uploadUnsavedMedia();
+            echo "OK";
+        } catch( \Exception $e ) {
+            echo $e->getMessage();
+        }
+        wp_die();
+    } );
+
 
     if ( !wp_next_scheduled( 'igml_cron_hook' ) )
         wp_schedule_event( time(), $settings->frequency ?? 'daily', 'igml_cron_hook' );
@@ -52,7 +61,13 @@ add_shortcode( 'social_feed', function( $atts ) {
         unset($atts['link']);
     }
 
-    $media = new MediaUploads( $atts );
+    $username = null;
+    if( isset($atts['username']) ) {
+        $username = $atts['username'];
+        unset($atts['username']);
+    }
+
+    $media = new MediaUploads( $atts, $username );
     $images = implode('', array_map( function( $item ) use ($link) {
         $html = "<li>";
         if( $link ) {

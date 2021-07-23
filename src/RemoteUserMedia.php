@@ -53,7 +53,7 @@ class RemoteUserMedia {
 
                 // Set Terms
                 wp_set_object_terms( 
-                    $attachment_id, 'instagram', 'social_media_attachments'
+                    $attachment_id, $this->settings->username, 'social_media_attachments'
                 );
             }
         } else {
@@ -85,7 +85,7 @@ class RemoteUserMedia {
 
     private function rateLimitRequests()
     {
-        sleep(30);
+        sleep(3);
     }
         
     private function request( $username, $maxId = null )
@@ -130,11 +130,12 @@ class RemoteUserMedia {
     public function saveMedias( $medias )
     {        
         foreach( $medias as $media ) {
-            if( $media->getType() !== 'image' )
-                continue;
-
-            if( $this->mediaIsSaved( $media ) )
-                return $this->allSaved = true;
+            if( $this->mediaIsSaved( $media ) ) {
+                if( $this->settings->thorough )
+                    continue;
+                else
+                    return $this->allSaved = true;
+            }
 
             $this->saveMedia( $media );
         }    
